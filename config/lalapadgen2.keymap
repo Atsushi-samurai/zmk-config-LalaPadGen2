@@ -57,7 +57,7 @@
 &kp LCTRL          &kp LWIN   &kp LEFT_ALT  &mo 1      &kp SPACE  &kp LEFT_SHIFT  &kp BACKSPACE  &kp ENTER  &mo 2     &kp LANGUAGE_2  &kp LANGUAGE_1  &kp BACKSLASH
                    &kp ESCAPE &kp RIGHT     &kp DOWN   &kp LEFT   &kp UP          &kp PAGE_UP    &kp LG(LEFT)  &kp PAGE_DOWN  &kp LG(RIGHT)  &kp TAB
 &mkp LCLK          &mkp RCLK  &mkp MCLK                                                                               &mkp LCLK       &mkp RCLK       &mkp MCLK
-&kp LG(LEFT_BRACKET)  &kp LG(RIGHT_BRACKET)  &kp LC(UP)  &kp LC(DOWN)  &kp LGUI                  &kp LG(LEFT_BRACKET)  &kp LG(RIGHT_BRACKET)  &kp LC(UP)  &kp LC(DOWN)  &kp LGUI
+&kp LG(LEFT_BRACKET)  &kp LG(RIGHT_BRACKET)  &kp LC(UP)  &kp LC(DOWN)  &none                     &kp LG(LEFT_BRACKET)  &kp LG(RIGHT_BRACKET)  &kp LC(UP)  &kp LC(DOWN)  &none
             >;
         };
 
@@ -70,7 +70,7 @@
 &trans            &trans             &trans        &trans        &trans   &trans  &kp DEL  &trans            &trans             &kp KP_NUMBER_0  &kp KP_DOT       &kp KP_DIVIDE
                   &trans             &trans        &trans        &trans   &trans  &trans   &trans            &trans             &trans           &trans
 &trans            &trans             &trans                                                                                     &trans           &trans           &trans
-&kp LC(LEFT)      &kp LC(RIGHT)      &kp LG(TAB)   &kp LG(GRAVE)  &kp LGUI                 &kp LC(LEFT)      &kp LC(RIGHT)      &kp LG(TAB)      &kp LG(GRAVE)  &kp LGUI
+&kp LC(LEFT)      &kp LC(RIGHT)      &kp LG(TAB)   &kp LG(GRAVE)  &none                    &kp LC(LEFT)      &kp LC(RIGHT)      &kp LG(TAB)      &kp LG(GRAVE)  &none
             >;
         };
 
@@ -83,7 +83,7 @@
 &trans           &trans         &trans        &trans                &trans                 &trans  &trans  &trans         &trans    &trans          &trans     &trans
                  &trans         &trans        &trans                &trans                 &trans  &trans  &trans         &trans    &trans          &trans
 &trans           &trans         &trans                                                                                              &trans          &trans     &trans
-&kp LC(LEFT)     &kp LC(RIGHT)  &kp LG(TAB)   &kp LG(GRAVE)        &kp LGUI                               &kp LC(LEFT)   &kp LC(RIGHT)  &kp LG(TAB)  &kp LG(GRAVE)  &kp LGUI
+&kp LC(LEFT)     &kp LC(RIGHT)  &kp LG(TAB)   &kp LG(GRAVE)        &none                                  &kp LC(LEFT)   &kp LC(RIGHT)  &kp LG(TAB)  &kp LG(GRAVE)  &none
             >;
         };
 
