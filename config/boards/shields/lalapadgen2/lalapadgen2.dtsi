@@ -135,6 +135,13 @@
                     &tp_to_pos  POS_TP_PINCH_L
                     >;
     };
+
+    pinch_zoom_keys: pinch_zoom_keys {
+        compatible = "zmk,input-processor-pinch-zoom-keys";
+        #input-processor-cells = <0>;
+        pinch-code = <INPUT_BTN_7>;
+        bindings = <&kp LG(PLUS)>, <&kp LG(MINUS)>;
+    };
     
     zip_dynamic_xy_scaler: zip_dynamic_xy_scaler {
         compatible = "zmk,input-processor-dynamic-scaler";
@@ -158,14 +165,16 @@
         compatible = "zmk,input-listener";
         status = "disabled";
         device = <&trackpad_split_R>;
-        input-processors = <&trackpad_key_behaviors_R>,
+        input-processors = <&pinch_zoom_keys>,
+                           <&trackpad_key_behaviors_R>,
                            <&zip_xy_scaler 1 5>,
                            <&zip_scroll_scaler 1 12>,
                            <&zip_dynamic_xy_scaler>,
                            <&zip_dynamic_scroll_scaler>;
         lowspeedmode {
             layers = <1>,<2>;
-            input-processors =  <&trackpad_key_behaviors_R>,
+            input-processors =  <&pinch_zoom_keys>,
+                                <&trackpad_key_behaviors_R>,
                                 <&zip_xy_scaler 1 15>,
                                 <&zip_scroll_scaler 1 40>,
                                 <&zip_dynamic_xy_scaler>,
@@ -176,14 +185,16 @@
         compatible = "zmk,input-listener";
         status = "disabled";
         device = <&trackpad_split_L>;
-        input-processors = <&trackpad_key_behaviors_L>,
+        input-processors = <&pinch_zoom_keys>,
+                           <&trackpad_key_behaviors_L>,
                            <&zip_xy_scaler 1 5>,
                            <&zip_scroll_scaler 1 12>,
                            <&zip_dynamic_xy_scaler>,
                            <&zip_dynamic_scroll_scaler>;
         lowspeedmode {
             layers = <1>,<2>;
-            input-processors =  <&trackpad_key_behaviors_L>,
+            input-processors =  <&pinch_zoom_keys>,
+                                <&trackpad_key_behaviors_L>,
                                 <&zip_xy_scaler 1 15>,
                                 <&zip_scroll_scaler 1 40>,
                                 <&zip_dynamic_xy_scaler>,
