@@ -1,0 +1,13 @@
+description: Convert IQS9151 pinch wheel events to zoom behavior taps
+
+compatible: "zmk,input-processor-pinch-zoom-keys"
+
+include: ip_zero_param.yaml
+
+properties:
+  pinch-code:
+    type: int
+    default: 279
+  bindings:
+    type: phandle-array
+    required: true
