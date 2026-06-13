@@ -8,6 +8,9 @@ properties:
   pinch-code:
     type: int
     default: 279
+  min-interval-ms:
+    type: int
+    default: 150
   bindings:
     type: phandle-array
     required: true
