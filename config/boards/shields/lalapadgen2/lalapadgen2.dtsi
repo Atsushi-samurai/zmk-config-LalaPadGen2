@@ -140,6 +140,7 @@
         compatible = "zmk,input-processor-pinch-zoom-keys";
         #input-processor-cells = <0>;
         pinch-code = <INPUT_BTN_7>;
+        min-interval-ms = <150>;
         bindings = <&kp LG(PLUS)>, <&kp LG(MINUS)>;
     };
     
