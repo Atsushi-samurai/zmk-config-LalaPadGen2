@@ -162,6 +162,14 @@
         track-remainders;
     };
 
+    zip_vertical_scroll_inverter: zip_vertical_scroll_inverter {
+        compatible = "zmk,input-processor-scaler";
+        #input-processor-cells = <2>;
+        type = <INPUT_EV_REL>;
+        codes = <INPUT_REL_WHEEL>;
+        track-remainders;
+    };
+
     trackpad_listener_R: trackpad_listener_R {
         compatible = "zmk,input-listener";
         status = "disabled";
@@ -169,6 +177,7 @@
         input-processors = <&pinch_zoom_keys>,
                            <&trackpad_key_behaviors_R>,
                            <&zip_xy_scaler 1 5>,
+                           <&zip_vertical_scroll_inverter 65535 1>,
                            <&zip_scroll_scaler 1 12>,
                            <&zip_dynamic_xy_scaler>,
                            <&zip_dynamic_scroll_scaler>;
@@ -177,6 +186,7 @@
             input-processors =  <&pinch_zoom_keys>,
                                 <&trackpad_key_behaviors_R>,
                                 <&zip_xy_scaler 1 15>,
+                                <&zip_vertical_scroll_inverter 65535 1>,
                                 <&zip_scroll_scaler 1 40>,
                                 <&zip_dynamic_xy_scaler>,
                                 <&zip_dynamic_scroll_scaler>;
@@ -189,6 +199,7 @@
         input-processors = <&pinch_zoom_keys>,
                            <&trackpad_key_behaviors_L>,
                            <&zip_xy_scaler 1 5>,
+                           <&zip_vertical_scroll_inverter 65535 1>,
                            <&zip_scroll_scaler 1 12>,
                            <&zip_dynamic_xy_scaler>,
                            <&zip_dynamic_scroll_scaler>;
@@ -197,6 +208,7 @@
             input-processors =  <&pinch_zoom_keys>,
                                 <&trackpad_key_behaviors_L>,
                                 <&zip_xy_scaler 1 15>,
+                                <&zip_vertical_scroll_inverter 65535 1>,
                                 <&zip_scroll_scaler 1 40>,
                                 <&zip_dynamic_xy_scaler>,
                                 <&zip_dynamic_scroll_scaler>;
