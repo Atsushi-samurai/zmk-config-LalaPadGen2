@@ -1,6 +1,107 @@
 name: Build ZMK firmware
-on: [push, pull_request, workflow_dispatch]
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    paths-ignore:
+      - firmware/**
 
 jobs:
   build:
     uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
+
+  upload-firmware:
+    needs: build
+    if: ${{ github.event_name != 'pull_request' }}
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get branch name
+        id: branch-name
+        run: |
+          echo "branch=${GITHUB_REF#refs/heads/}" >> "$GITHUB_OUTPUT"
+
+      - name: Prepare firmware directory
+        run: |
+          mkdir -p firmware/${{ steps.branch-name.outputs.branch }}
+          rm -rf firmware/${{ steps.branch-name.outputs.branch }}/*
+
+      - name: Download firmware artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: firmware/${{ steps.branch-name.outputs.branch }}
+
+      - name: Commit updated firmware
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: 'firmware/**/*'
+          commit_message: 'Update firmware files for branch ${{ steps.branch-name.outputs.branch }}'
+          commit_options: '--no-verify'
+          push_options: '--no-verify'
+
+  notify:
+    needs:
+      - build
+      - upload-firmware
+    if: ${{ always() && github.event_name != 'pull_request' }}
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout trigger commit
+        uses: actions/checkout@v4
+
+      - name: Prepare notification
+        id: notification
+        shell: bash
+        env:
+          BUILD_RESULT: ${{ needs.build.result }}
+          UPLOAD_RESULT: ${{ needs.upload-firmware.result }}
+        run: |
+          translate_result() {
+            case "$1" in
+              success) echo "成功" ;;
+              failure) echo "失敗" ;;
+              cancelled) echo "キャンセル" ;;
+              skipped) echo "スキップ" ;;
+              *) echo "$1" ;;
+            esac
+          }
+
+          BUILD_STATUS=$(translate_result "$BUILD_RESULT")
+          UPLOAD_STATUS=$(translate_result "$UPLOAD_RESULT")
+
+          if [[ "$BUILD_RESULT" == "success" && "$UPLOAD_RESULT" == "success" ]]; then
+            OVERALL_STATUS="成功"
+            COLOUR="#2EA043"
+          else
+            OVERALL_STATUS="失敗"
+            COLOUR="#D1242F"
+          fi
+
+          {
+            echo "overall=$OVERALL_STATUS"
+            echo "build=$BUILD_STATUS"
+            echo "upload=$UPLOAD_STATUS"
+            echo "colour=$COLOUR"
+            echo "commit_message=$(git log -1 --pretty=%s)"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Send Discord notification
+        uses: stegzilla/discord-notify@v2
+        with:
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          title: ZMK firmware ${{ steps.notification.outputs.overall }}
+          title_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          colour: ${{ steps.notification.outputs.colour }}
+          message: |
+            **リポジトリ:** `${{ github.repository }}`
+            **ブランチ:** `${{ github.ref_name }}`
+            **コミット:** `${{ steps.notification.outputs.commit_message }}`
+            **ビルド:** ${{ steps.notification.outputs.build }}
+            **ファームウェア保存:** ${{ steps.notification.outputs.upload }}
+            **実行結果:** https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
