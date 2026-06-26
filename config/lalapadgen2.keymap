@@ -45,6 +45,31 @@
         };
     };
 
+    combos {
+        compatible = "zmk,combos";
+
+        combo_jk_lclk {
+            timeout-ms = <30>;
+            key-positions = <16 17>;
+            bindings = <&mkp LCLK>;
+            layers = <DEFAULT_LAYER>;
+        };
+
+        combo_kl_rclk {
+            timeout-ms = <30>;
+            key-positions = <17 18>;
+            bindings = <&mkp RCLK>;
+            layers = <DEFAULT_LAYER>;
+        };
+
+        combo_jl_mclk {
+            timeout-ms = <30>;
+            key-positions = <16 18>;
+            bindings = <&mkp MCLK>;
+            layers = <DEFAULT_LAYER>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
